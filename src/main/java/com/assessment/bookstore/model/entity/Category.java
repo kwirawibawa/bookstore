@@ -1,4 +1,4 @@
-package com.assessment.bookstore.entity;
+package com.assessment.bookstore.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
+public class Category extends AuditTrail {
 
     @Id
     @GeneratedValue
@@ -21,6 +21,6 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.SET_NULL)
+    @OneToMany(mappedBy = "category")
     private List<Book> books;
 }

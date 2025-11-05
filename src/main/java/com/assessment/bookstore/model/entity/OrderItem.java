@@ -1,4 +1,4 @@
-package com.assessment.bookstore.entity;
+package com.assessment.bookstore.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderItem {
+public class OrderItem extends AuditTrail {
 
     @Id
     @GeneratedValue

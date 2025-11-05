@@ -1,4 +1,4 @@
-package com.assessment.bookstore.entity;
+package com.assessment.bookstore.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Book {
+public class Book extends AuditTrail {
 
     @Id
     @GeneratedValue
