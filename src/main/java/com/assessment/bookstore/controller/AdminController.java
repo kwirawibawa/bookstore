@@ -1,8 +1,6 @@
 package com.assessment.bookstore.controller;
 
-import com.assessment.bookstore.model.entity.User;
 import com.assessment.bookstore.model.request.AdminCreateRequest;
-import com.assessment.bookstore.model.response.AdminResponse;
 import com.assessment.bookstore.model.response.ApiResponse;
 import com.assessment.bookstore.model.response.RegisterResponse;
 import com.assessment.bookstore.service.AdminService;
@@ -24,15 +22,7 @@ public class AdminController {
 
     @PostMapping("/create-admin")
     public ResponseEntity<ApiResponse<RegisterResponse>> createFirstAdmin(@Validated @RequestBody AdminCreateRequest request) {
-
-        RegisterResponse responseData = adminService.createFirstAdmin(request);
-
-        ApiResponse<RegisterResponse> response = new ApiResponse<>(
-                CommonConstant.SUCCESS_CODE,
-                "Admin created successfully",
-                responseData
-        );
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ApiResponse<>(CommonConstant.SUCCESS_CODE,
+                "Admin created successfully", adminService.createFirstAdmin(request)));
     }
 }

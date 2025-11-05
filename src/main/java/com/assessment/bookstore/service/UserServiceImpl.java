@@ -7,6 +7,7 @@ import com.assessment.bookstore.model.response.LoginResponse;
 import com.assessment.bookstore.model.response.RegisterResponse;
 import com.assessment.bookstore.repository.UserRepository;
 import com.assessment.bookstore.security.JwtUtil;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private final RoleService roleService;
 
     @Override
     public RegisterResponse registerUser(RegisterRequest request) {
@@ -57,15 +57,17 @@ public class UserServiceImpl implements UserService {
         }
 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
+        Claims claims = jwtUtil.getClaims(token);
 
-        LoginResponse response = new LoginResponse();
-        response.setToken(token);
-        response.setTokenType("Bearer");
-        response.setId(user.getId().toString());
-        response.setName(user.getName());
-        response.setEmail(user.getEmail());
-        response.setRole(user.getRole().name());
-
-        return response;
+        return new LoginResponse(
+                token,
+                "Bearer",
+                user.getId().toString(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole().name(),
+                claims.getIssuedAt(),
+                claims.getExpiration()
+        );
     }
 }

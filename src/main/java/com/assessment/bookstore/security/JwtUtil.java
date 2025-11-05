@@ -49,4 +49,12 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
                 .parseClaimsJws(token).getBody().get("role", String.class);
     }
+
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }

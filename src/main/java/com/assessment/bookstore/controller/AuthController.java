@@ -24,28 +24,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<RegisterResponse>> registerUser(@Validated @RequestBody RegisterRequest request) {
-
-        RegisterResponse responseData = userService.registerUser(request);
-
-        ApiResponse<RegisterResponse> response = new ApiResponse<>(
-                CommonConstant.SUCCESS_CODE,
-                "User registered successfully",
-                responseData
-        );
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ApiResponse<>(CommonConstant.SUCCESS_CODE,
+                        "User registered successfully", userService.registerUser(request)));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> loginUser(@Validated @RequestBody LoginRequest request) {
-
-        LoginResponse responseData = userService.loginUser(request);
-
-        ApiResponse<LoginResponse> response = new ApiResponse<>(
-                CommonConstant.SUCCESS_CODE,
-                "Login successful",
-                responseData
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ApiResponse<>(CommonConstant.SUCCESS_CODE,
+                        "Login successful", userService.loginUser(request)));
     }
 }
