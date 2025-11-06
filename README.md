@@ -114,39 +114,46 @@ mvn spring-boot:run
 ---
 
 ## 🔌 API Endpoints
+
 ### **Auth**
 
-* `POST /admin/create-admin` → Create first admin
-* `POST /register` → Registrasi user baru
-* `POST /login` → Login dan mendapatkan JWT token
+* `POST /admin/create-admin` → Create the first admin account
+* `POST /register` → Register a new user
+* `POST /login` → Login and obtain a JWT token
 
 ### **Categories (Admin Only)**
 
-* `POST /categories` → Buat kategori baru
-* `GET /categories` → Daftar semua kategori
-* `PUT /categories/{id}` → Update kategori
-* `DELETE /categories/{id}` → Hapus kategori
+* `POST /categories` → Create a new category
+* `GET /categories` → Get all categories
+* `PUT /categories/{id}` → Update a category
+* `DELETE /categories/{id}` → Delete a category
 
 ### **Books**
 
-* `POST /books` → Buat buku baru (Admin only, dengan gambar Base64)
-* `GET /books` → Daftar buku (dengan pagination, search, filter kategori)
-* `GET /books/{id}` → Detail buku berdasarkan ID
-* `PUT /books/{id}` → Update buku (Admin only)
-* `DELETE /books/{id}` → Hapus buku (Admin only)
+* `POST /books` → Create a new book (Admin only, includes Base64 image upload)
+* `GET /books` → Get list of books (supports pagination, search, and category filtering)
+* `GET /books/{id}` → Get book details by ID
+* `PUT /books/{id}` → Update book data (Admin only)
+* `DELETE /books/{id}` → Delete a book (Admin only)
 
 ### **Orders & Payment**
 
-* `POST /orders` → Buat order multi-item
-* `POST /orders/{id}/pay` → Simulasi pembayaran
-* `GET /orders` → Daftar order (User: order miliknya, Admin: semua order)
-* `GET /orders/{id}` → Detail order (User: hanya miliknya, Admin: semua order)
+* `POST /orders` → Create an order with multiple items
+* `POST /orders/{id}/pay` → Simulate payment for an order
+* `GET /orders` → Get order list
+
+  * User: only their own orders
+  * Admin: all orders
+* `GET /orders/{id}` → Get order details
+
+  * User: only their own
+  * Admin: all orders
 
 ### **Reporting (Admin Only)**
 
-* `GET /reports/sales` → Total revenue & total buku terjual
-* `GET /reports/bestseller` → Top 3 buku terlaris
-* `GET /reports/prices` → Statistik harga buku (max, min, avg)
+* `GET /reports/sales` → Get total revenue and total books sold
+* `GET /reports/bestseller` → Get top 3 best-selling books
+* `GET /reports/prices` → Get book price statistics (max, min, average)
 
 ---
 
