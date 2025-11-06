@@ -1,5 +1,6 @@
 package com.assessment.bookstore.service;
 
+import com.assessment.bookstore.exception.DuplicateException;
 import com.assessment.bookstore.model.entity.Book;
 import com.assessment.bookstore.model.entity.Category;
 import com.assessment.bookstore.model.request.BookRequest;
@@ -10,6 +11,7 @@ import com.assessment.bookstore.repository.BookRepository;
 import com.assessment.bookstore.repository.CategoryRepository;
 import com.assessment.bookstore.util.CommonConstant;
 import com.assessment.bookstore.util.CommonPaging;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +51,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse createBook(BookRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         bookRepository.findByTitleAndAuthor(request.getTitle(), request.getAuthor())
                 .ifPresent(b -> {
-                    throw new RuntimeException("Book with the same title and author already exists");
+                    throw new DuplicateException("Book with the same title and author already exists");
                 });
 
         Book book = Book.builder()
@@ -72,7 +74,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public BookResponse getBookById(UUID id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book " + CommonConstant.NOT_FOUND));
@@ -86,12 +88,12 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new RuntimeException("Book " + CommonConstant.NOT_FOUND));
 
         Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         bookRepository.findByTitleAndAuthor(request.getTitle(), request.getAuthor())
                 .filter(b -> !b.getId().equals(id))
                 .ifPresent(b -> {
-                    throw new RuntimeException("Book with the same title and author already exists");
+                    throw new DuplicateException("Book with the same title and author already exists");
                 });
 
         book.setTitle(request.getTitle());
@@ -110,14 +112,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse deleteBook(UUID id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
-
-        BookResponse bookResponse = new BookResponse();
-        bookResponse.setTitle(book.getTitle());
+                .orElseThrow(() -> new EntityNotFoundException("Book not found"));
 
         bookRepository.delete(book);
 
-        return bookResponse;
+        return BookResponse.builder()
+                .id(String.valueOf(book.getId()))
+                .title(book.getTitle())
+                .build();
     }
 
     private BookResponse mapToResponse(Book book) {

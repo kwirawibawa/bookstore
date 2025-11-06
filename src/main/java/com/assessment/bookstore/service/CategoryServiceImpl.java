@@ -4,6 +4,7 @@ import com.assessment.bookstore.model.entity.Category;
 import com.assessment.bookstore.model.entity.User;
 import com.assessment.bookstore.model.response.CategoryResponse;
 import com.assessment.bookstore.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse updateCategory(UUID id, Category category) {
         Category existing = categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         if (!existing.getName().equals(category.getName()) &&
                 categoryRepository.existsByName(category.getName())) {
@@ -74,16 +75,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse deleteCategory(UUID id) {
         Category existing = categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
-
-        CategoryResponse categoryResponse = new CategoryResponse();
-        categoryResponse.setId(existing.getId().toString());
-        categoryResponse.setName(existing.getName());
-        categoryResponse.setBooks(existing.getBooks());
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         categoryRepository.delete(existing);
 
-        return categoryResponse;
+        return CategoryResponse.builder()
+                .id(existing.getId().toString())
+                .name(existing.getName())
+                .books(existing.getBooks())
+                .build();
     }
 }
 

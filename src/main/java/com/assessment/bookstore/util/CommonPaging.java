@@ -17,7 +17,7 @@ public class CommonPaging {
     public int getNumberOfElements() {
         if (totalElements == 0 || size <= 0) return 0;
 
-        long startIndex = (long) (number - 1) * size; // pageNumber dimulai dari 1
+        long startIndex = (long) (number - 1) * size;
         if (startIndex >= totalElements) return 0;
 
         long remaining = totalElements - startIndex;
@@ -31,7 +31,7 @@ public class CommonPaging {
 
     public int getEndData() {
         if (totalElements == 0) return 0;
-        return (int) Math.min(number * size, totalElements);
+        return (int) Math.min((long) number * size, totalElements);
     }
 }
 

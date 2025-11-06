@@ -14,6 +14,7 @@ public interface BookService {
     @Transactional
     BookResponse createBook(BookRequest request);
 
+    @Transactional(readOnly = true)
     BookResponse getBookById(UUID id);
 
     @Transactional

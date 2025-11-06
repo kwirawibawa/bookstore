@@ -46,7 +46,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<Void>> deleteCategory(@PathVariable UUID id) {
         CategoryResponse categoryResponse = categoryService.deleteCategory(id);
         return ResponseEntity.ok(new ApiResponse<>(CommonConstant.SUCCESS_CODE,
-                "Category " + categoryResponse.getName() + "is deleted successfully", null));
+                "Category " + categoryResponse.getName() + " is deleted successfully", null));
     }
 }
 

@@ -39,6 +39,9 @@ public class Book extends AuditTrail {
     @Lob
     private String imageBase64;
 
+    @Version
+    private int version;
+
     @OneToMany(mappedBy = "book")
     private List<OrderItem> orderItems;
 }
