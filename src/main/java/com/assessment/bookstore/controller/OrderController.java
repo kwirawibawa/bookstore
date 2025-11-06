@@ -39,6 +39,7 @@ public class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public SearchResponse<OrderResponse> getOrders( @RequestParam(defaultValue = "1") int pageNumber,
                                                     @RequestParam(defaultValue = "10") int pageSize) {
         return orderService.getAllOrders(pageNumber, pageSize);
