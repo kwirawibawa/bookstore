@@ -15,7 +15,7 @@ A backend system for managing an online bookstore, built with Java 21, Spring Bo
 ## ✨ Features
 * **Authentication & Authorization:** JWT-based login/registration, role-based access (user & admin)
 * **Category Management:** CRUD categories (admin only)
-* **Book Management:** CRUD books (admin only) with Base64 image upload
+* **Book Management:** CRUD books (admin only)
 * **Order Management:** Create multi-item orders, validate stock, calculate total price, simulate payment
 * **Reporting (Admin Only):**
 
