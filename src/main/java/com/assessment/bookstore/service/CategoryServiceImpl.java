@@ -6,6 +6,7 @@ import com.assessment.bookstore.model.response.CategoryResponse;
 import com.assessment.bookstore.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
         return response;
     }
 
+    @Transactional
     @Override
     public CategoryResponse createCategory(Category category) {
         if (categoryRepository.existsByName(category.getName())) {
@@ -49,6 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
         return responses;
     }
 
+    @Transactional
     @Override
     public CategoryResponse updateCategory(UUID id, Category category) {
         Category existing = categoryRepository.findById(id)
@@ -67,6 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
         return mapToResponse(updated);
     }
 
+    @Transactional
     @Override
     public CategoryResponse deleteCategory(UUID id) {
         Category existing = categoryRepository.findById(id)

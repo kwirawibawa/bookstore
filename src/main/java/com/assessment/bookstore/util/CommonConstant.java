@@ -10,4 +10,6 @@ public class CommonConstant {
 
     public static final String VALIDATION_ERROR = "Validation Error";
     public static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
+    public static final String SUCCESS = "Success";
+    public static final String NOT_FOUND = "not found";
 }
