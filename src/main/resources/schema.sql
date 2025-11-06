@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id UUID NOT NULL,
     total_price DECIMAL(12,2) NOT NULL DEFAULT 0,
     status VARCHAR(20) NOT NULL CHECK (status IN ('PENDING','PAID','CANCELLED')),
-    created_at TIMESTAMP,
+    paid_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(36),
     updated_at TIMESTAMP,
